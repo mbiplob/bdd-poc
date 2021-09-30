@@ -8,6 +8,7 @@ import io.cucumber.testng.CucumberOptions;
         plugin = {"pretty", "html:target/site/cucumber-pretty.html"},
         features ={"src/test/resources/features/"},
         glue = {"stepdefs"},
+        tags = "@dataDrivenTest",
         dryRun = false
 )
 

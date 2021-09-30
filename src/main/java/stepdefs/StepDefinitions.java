@@ -4,26 +4,36 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class StepDefinitions {
-
-    WebDriver driver;
-
+public class StepDefinitions extends BaseClass{
 
     @Given("I open Browser")
     public void i_open_browser() throws InterruptedException {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
         driver.get("https://demo.broadleafcommerce.org/");
         System.out.println("I opened Browser");
-        Thread.sleep(5000);
+        Thread.sleep(3000);
 
     }
     @Given("I navigate to the login page")
-    public void i_navigate_to_the_login_page() {
+    public void i_navigate_to_the_login_page() throws InterruptedException {
         System.out.println("I clicked on the login Page");
+        driver.findElement(By.xpath("//a[normalize-space()='Login']")).click();
+        Thread.sleep(3000);
+
+    }
+    @When("I enter username as {string}")
+    public void i_enter_username_as(String string) {
+        driver.findElement(By.xpath("//input[@name='username']")).sendKeys(string);
+    }
+    @When("I enter password as {string}")
+    public void i_enter_password_as(String string) throws InterruptedException {
+        driver.findElement(By.xpath("//body/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/form[1]/div[2]/div[1]/input[1]")).sendKeys(string);
+        driver.findElement(By.xpath("//button[normalize-space()='Login']")).click();
+        Thread.sleep(3000);
+
     }
     @When("I enter username")
     public void i_enter_username() {
@@ -40,11 +50,6 @@ public class StepDefinitions {
     @Then("I should see the logout button")
     public void i_should_see_the_logout_button() {
 
-    }
-    @Then("I close browser")
-    public void i_close_browser() {
-
-        driver.quit();
     }
 
 
